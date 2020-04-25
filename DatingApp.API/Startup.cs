@@ -37,7 +37,9 @@ namespace DatingApp.API
             services.AddDbContext<DataContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
+            services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDatingRepository, DatingRepository>();
 
             //Adding Authentication and waiting for a token from jsonfile 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
