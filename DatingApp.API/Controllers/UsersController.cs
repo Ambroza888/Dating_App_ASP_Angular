@@ -25,7 +25,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id);
-            return Ok(200);
+            return Ok(user);
         }
     }
 }
