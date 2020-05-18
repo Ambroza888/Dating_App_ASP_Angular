@@ -9,7 +9,7 @@
 /* =========== */
 /* Snippet for styles.css to style the tabs component
 =========== */
-.tab-panel {
+/* .tab-panel {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 4px;
@@ -53,5 +53,5 @@
     border: 0;
     border-top: 1px solid #eee;
     padding: 15px 0;
-  }
+  } */
   /* ================= End Tabs css for tabs in userDetail Component ============================== */
