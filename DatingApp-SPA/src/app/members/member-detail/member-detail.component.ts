@@ -51,7 +51,7 @@ export class MemberDetailComponent implements OnInit {
   }
 
 // this.route.snapshot.params is accessing the UserID from the ActivatedRoute in Angular/routes;
-// + operator at fron of the params it makes the string ['id'] in number(int);
+// + operator at front of the params it makes the string ['id'] in number(int);
 //   loadUser() {
 //     this.userService.GetUser(+this.route.snapshot.params['id']).subscribe((user: User) => {
 //       this.user = user;
