@@ -19,4 +19,8 @@ constructor(private http: HttpClient) { }
   GetUser(id: number): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
+  UpdateUser(id: number, user: User)
+  {
+    return this.http.put(this.baseUrl + '/users/' + id, user);
+  }
 }
