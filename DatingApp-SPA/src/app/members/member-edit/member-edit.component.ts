@@ -25,6 +25,6 @@ export class MemberEditComponent implements OnInit {
   updateUser() {
     console.log(this.user);
     this.alertify.success('Profile updated successfully');
-    this.editForm.reset();
+    this.editForm.reset(this.user);
   }
 }
