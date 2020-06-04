@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -38,7 +39,9 @@ namespace DatingApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
+            System.Console.WriteLine("********************************************************");
             System.Console.WriteLine(int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value));
+            System.Console.WriteLine("********************************************************");
 
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
@@ -51,6 +54,7 @@ namespace DatingApp.API.Controllers
             {
                 return NoContent();
             }
+            throw new Exception($"Updating user {id} failed to save");
         }
     }
 }
