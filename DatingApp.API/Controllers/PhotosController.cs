@@ -4,11 +4,13 @@ using CloudinaryDotNet.Actions;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Helpers;
+using DatingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DatingApp.API.Controllers
 {
@@ -18,7 +20,7 @@ namespace DatingApp.API.Controllers
 
     public class PhotosController : ControllerBase
     {
-        private readonly IDatingRepository _repo;
+        public readonly IDatingRepository _repo;
         private readonly IMapper _mapper;
         public readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         private Cloudinary _cloudinary;
@@ -42,7 +44,7 @@ namespace DatingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = _repo.GetUser(userId);
+            var userFromRepo = await _repo.GetUser(userId);
 
             var file = photoForCreationDto.File;
 
@@ -60,8 +62,16 @@ namespace DatingApp.API.Controllers
 
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
-
             }
+
+            photoForCreationDto.Url = uploadResult.Uri.ToString();
+            photoForCreationDto.PublicId = uploadResult.PublicId;
+
+            var photo = _mapper.Map<Photo>(photoForCreationDto);
+
+            //Checking if that is the first photo user add. so put at like Main photo.
+            if (!userFromRepo.Photos.Any(u => u.IsMain))
+                return photo.IsMain = true;
         }
     }
 }

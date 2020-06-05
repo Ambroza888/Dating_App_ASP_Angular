@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DatingApp.API.Migrations
 {
-    public partial class UpdatedPhoto : Migration
+    public partial class FixedMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
