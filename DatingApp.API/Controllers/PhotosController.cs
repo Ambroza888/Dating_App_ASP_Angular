@@ -71,7 +71,15 @@ namespace DatingApp.API.Controllers
 
             //Checking if that is the first photo user add. so put at like Main photo.
             if (!userFromRepo.Photos.Any(u => u.IsMain))
-                return photo.IsMain = true;
+                photo.IsMain = true;
+            userFromRepo.Photos.Add(photo);
+
+            if (await _repo.SaveAll())
+            {
+                return Ok();
+            }
+            
+            return BadRequest("Could not add the photo mR.Veso didn't make the logic right");
         }
     }
 }
