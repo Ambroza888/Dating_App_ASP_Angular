@@ -1,5 +1,6 @@
 using AutoMapper;
 using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Helpers;
@@ -44,7 +45,23 @@ namespace DatingApp.API.Controllers
             var userFromRepo = _repo.GetUser(userId);
 
             var file = photoForCreationDto.File;
-            
+
+            var uploadResult = new ImageUploadResult();
+
+            if (file.Length > 0)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(file.Name, stream),
+                        Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
+                    };
+
+                    uploadResult = _cloudinary.Upload(uploadParams);
+                }
+
+            }
         }
     }
 }
