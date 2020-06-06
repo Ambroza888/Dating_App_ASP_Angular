@@ -43,12 +43,12 @@ namespace DatingApp.API.Controllers
         // ---------------------------------------------------------------------
         // Named Route which will get return by the Name to AddPhotoFor user Route
         // ---------------------------------------------------------------------
-        [HttpGet("{id}", Name = "GetPhoto")]
-        public async Task<IActionResult> GetPhoto(int id)
+        [HttpGet("{photoId}", Name = "GetPhoto")]
+        public async Task<IActionResult> GetPhoto(int photoId)
         {
-            var photoFromRepo = await _repo.GetPhoto(id);
+            var photoFromRepo = await _repo.GetPhoto(photoId);
 
-            var photo = _mapper.Map<PhotoForReturn>(photoFromRepo);
+            var photo = _mapper.Map<PhotoForReturnDto>(photoFromRepo);
             return Ok(photo);
         }
         // ---------------------------------------------------------------------
@@ -90,10 +90,11 @@ namespace DatingApp.API.Controllers
                 photo.IsMain = true;
             
             userFromRepo.Photos.Add(photo);
+            
             if (await _repo.SaveAll())
             {
-                var photoToReturn = _mapper.Map<PhotoForReturn>(photo);
-                return CreatedAtRoute("GetPhoto", new {id = photo.Id},photoToReturn);
+                var photoToReturn = _mapper.Map<PhotoForReturnDto>(photo);
+                return CreatedAtRoute("GetPhoto", new {photoId = photo.Id},photoToReturn);
             }
             
             return BadRequest("Could not add the photo mR.Veso didn't make the logic right");
