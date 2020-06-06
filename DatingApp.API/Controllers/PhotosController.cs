@@ -39,6 +39,22 @@ namespace DatingApp.API.Controllers
             );
             _cloudinary = new Cloudinary(acc); 
         }
+
+        // ---------------------------------------------------------------------
+        // Named Route which will get return by the Name to AddPhotoFor user Route
+        // ---------------------------------------------------------------------
+        [HttpGet("{id}", Name = "GetPhoto")]
+        public async Task<IActionResult> GetPhoto(int id)
+        {
+            var photoFromRepo = await _repo.GetPhoto(id);
+
+            var photo = _mapper.Map<PhotoForReturn>(photoFromRepo);
+            return Ok(photo);
+        }
+        // ---------------------------------------------------------------------
+        // Adding photo to User
+        // ---------------------------------------------------------------------
+        [HttpPost]
         public async Task<IActionResult> AddPhotoForUser(int userId, PhotoForCreationDto photoForCreationDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -72,6 +88,7 @@ namespace DatingApp.API.Controllers
             //Checking if that is the first photo user add. so put at like Main photo.
             if (!userFromRepo.Photos.Any(u => u.IsMain))
                 photo.IsMain = true;
+            
             userFromRepo.Photos.Add(photo);
 
             if (await _repo.SaveAll())
