@@ -99,5 +99,18 @@ namespace DatingApp.API.Controllers
             
             return BadRequest("Could not add the photo mR.Veso didn't make the logic right");
         }
+        // ---------------------------------------------------------------------
+        // Setting MainPhoto route
+        // ---------------------------------------------------------------------
+        [HttpPost("{id}/setMain")]
+        
+        public async Task<IActionResult> SetMainPhoto(int userId,int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            
+            
+        }
+
     }
 }
