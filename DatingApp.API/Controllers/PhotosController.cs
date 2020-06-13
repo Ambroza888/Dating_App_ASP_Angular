@@ -122,7 +122,6 @@ namespace DatingApp.API.Controllers
             var currentMainPhoto = await _repo.GetMainPhotoForUser(userId);
 
             currentMainPhoto.IsMain = false;
-            
             photoFromRepo.IsMain = true;
 
             if (await _repo.SaveAll())

@@ -22,7 +22,7 @@ constructor(private http: HttpClient) { }
   updateUser(id: number, user: User) {
     return this.http.put(this.baseUrl + 'users/' + id, user);
   }
-  // updateMainPhoto(userId: number, photoId: number) {
-  //   return this.http.post(this.baseUrl + 'users/' + userId + 'photos/' + photoId);
-  // }
+  setMainPhoto(userId: number, photoId: number) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + photoId + '/setMain', {});
+  }
 }
