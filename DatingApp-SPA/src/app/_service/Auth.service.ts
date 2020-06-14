@@ -11,6 +11,7 @@ export class AuthService {
   baseUrl = environment.apiUrl + 'auth/';
   jwtHelper = new JwtHelperService();
   decodedToken: any;
+  currentUser: any;
 
 constructor(private http: HttpClient) { }
 
@@ -24,8 +25,9 @@ constructor(private http: HttpClient) { }
             console.log(user);
             console.log(user.token);
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            console.log(this.decodedToken);
-            console.log(this.decodedToken.nameid);
+            this.currentUser = JSON.stringify(user.user);
+            console.log(this.currentUser);
+            console.log(user.user);
           }
         })
       );
