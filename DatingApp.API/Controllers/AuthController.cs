@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Models;
@@ -12,71 +13,79 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DatingApp.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class AuthController : ControllerBase
+  {
+    private readonly IAuthRepository _repo;
+    private readonly IConfiguration _config;
+    private readonly IMapper _mapper;
+    public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
     {
-        private readonly IAuthRepository _repo;
-        private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
-        {
-            _config = config;
-            _repo = repo;
-        }
-        
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
-        {
-            userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
+      _mapper = mapper;
+      _config = config;
+      _repo = repo;
+    }
 
-            if(await _repo.UserExists(userForRegisterDto.Username))
-                return BadRequest("Username already exists");
-            
-            var userToCreate = new User
-            {
-                Username = userForRegisterDto.Username
-            };
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
+    {
+      userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
-            var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
+      if (await _repo.UserExists(userForRegisterDto.Username))
+        return BadRequest("Username already exists");
 
-            return StatusCode(201);
-        }
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
-        {
-            var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
-            
-            if(userFromRepo == null)
-                return Unauthorized();
-            
-            // Creating TOKEN
-            //Creating claims - we bring using.systems.security.claims
+      var userToCreate = new User
+      {
+        Username = userForRegisterDto.Username
+      };
 
-            var claims = new[]
-            {
+      var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
+
+      return StatusCode(201);
+    }
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
+    {
+      var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
+
+      if (userFromRepo == null)
+        return Unauthorized();
+
+      // Creating TOKEN
+      //Creating claims - we bring using.systems.security.claims
+
+      var claims = new[]
+      {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
                 new Claim(ClaimTypes.Name, userFromRepo.Username)
             };
-            // Creating Key
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+      // Creating Key
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
-            //Creating Credentials
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+      //Creating Credentials
+      var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-            };
+      var tokenDescriptor = new SecurityTokenDescriptor
+      {
+        Subject = new ClaimsIdentity(claims),
+        Expires = DateTime.Now.AddDays(1),
+        SigningCredentials = creds
+      };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+      var tokenHandler = new JwtSecurityTokenHandler();
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return Ok(new {
-                token = tokenHandler.WriteToken(token)
-            });
-        }
+      var token = tokenHandler.CreateToken(tokenDescriptor);
+      // -----------------------------------------------------------------
+      // Need to map userFromRepo to UserFromLists because i don't want to send
+      // passwordhash and passwordsalt to the client with the API call ..
+      // -----------------------------------------------------------------
+      var user = _mapper.Map<UserForListDto>(userFromRepo);
+      return Ok(new
+      {
+        token = tokenHandler.WriteToken(token),
+        user
+      });
     }
+  }
 }
