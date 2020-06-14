@@ -94,6 +94,9 @@ namespace DatingApp.API.Controllers
             if (await _repo.SaveAll())
             {
                 var photoToReturn = _mapper.Map<PhotoForReturnDto>(photo);
+                
+                // GetPhoto(routeName from above) we sent the photoid and phototoReturn);
+                //Using CreatedAtRoute method;
                 return CreatedAtRoute("GetPhoto", new {photoId = photo.Id},photoToReturn);
             }
             
