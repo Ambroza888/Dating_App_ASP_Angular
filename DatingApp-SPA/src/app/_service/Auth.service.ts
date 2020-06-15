@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService} from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
@@ -13,8 +14,18 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User;
+  // ---------------------------------------------------------------------------
+  // I will use the authService to comunicate Many to Many Components.
+  // Bring in BehaviorSubject(is type of observable). Always needs value for that i added original.png for that.
+  // ---------------------------------------------------------------------------
+  photoUrl = new BehaviorSubject<string>('../../assets/original.png');
+  currentPhotoUrl = this.photoUrl.asObservable();
 
 constructor(private http: HttpClient) { }
+
+  updatePhotoUrl(photoURL: string) {
+    this.photoUrl.next(photoURL);
+  }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model)
@@ -26,6 +37,7 @@ constructor(private http: HttpClient) { }
             localStorage.setItem('user', JSON.stringify(user.user));
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
             this.currentUser = user.user;
+            this.updatePhotoUrl(this.currentUser.photoUrl);
 
             console.log(this.currentUser);
             console.log(user.user);
