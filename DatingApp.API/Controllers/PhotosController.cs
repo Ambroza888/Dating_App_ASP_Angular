@@ -106,7 +106,6 @@ namespace DatingApp.API.Controllers
         // Setting MainPhoto route
         // ---------------------------------------------------------------------
         [HttpPost("{id}/setMain")]
-        
         public async Task<IActionResult> SetMainPhoto(int userId, int id)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -131,6 +130,22 @@ namespace DatingApp.API.Controllers
                 return NoContent();
             return BadRequest("Could not set photo to main");
         
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePhoto(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            
+            var user = await _repo.GetUser(userId);
+
+            if (!user.Photos.Any(p => p.Id == id))
+                return Unauthorized();
+
+            var photoFromRepo = await _repo.GetPhoto(id);
+
+            if (photoFromRepo.IsMain)
+                return BadRequest("This is already the main photo");
         }
 
     }
