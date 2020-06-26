@@ -145,7 +145,9 @@ namespace DatingApp.API.Controllers
             var photoFromRepo = await _repo.GetPhoto(id);
 
             if (photoFromRepo.IsMain)
-                return BadRequest("This is already the main photo");
+                return BadRequest("You cannot delete your main photo");
+            var deleteParams = new DeletionParams(photoFromRepo.PublicId);
+            var result = _cloudinary.Destroy(deleteParams);
         }
 
     }
