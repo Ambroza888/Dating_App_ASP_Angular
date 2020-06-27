@@ -5,7 +5,6 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from 'src/app/_service/Auth.service';
 import { UserService } from 'src/app/_service/user.service';
 import { AlertifyService } from 'src/app/_service/alertify.service';
-import { error } from 'protractor';
 
 @Component({
   selector: 'app-photo-editor',
@@ -68,13 +67,5 @@ export class PhotoEditorComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     });
-  }
-
-  deletePhoto(id: number) {
-    this.alertify.confirm('Are you sure you want to delete this photo?', () => {
-      this.userService.deletePhoto(this.authService.decodedToken.userid, id).subscribe( () => {
-        
-      })
-    })
   }
 }
