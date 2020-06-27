@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from 'src/app/_service/Auth.service';
 import { UserService } from 'src/app/_service/user.service';
 import { AlertifyService } from 'src/app/_service/alertify.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-photo-editor',
@@ -66,6 +67,14 @@ export class PhotoEditorComponent implements OnInit {
       localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
     }, error => {
       this.alertify.error(error);
+    });
+  }
+
+  deletePhoto(photo: Photo) {
+    this.userService.deletePhoto(this.authService.decodedToken.nameid, photo.id).subscribe(data => {
+      console.log(data);
+    }, error => {
+      console.log(error);
     });
   }
 }
