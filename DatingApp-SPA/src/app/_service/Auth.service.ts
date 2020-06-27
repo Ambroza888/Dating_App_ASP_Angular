@@ -39,7 +39,7 @@ constructor(private http: HttpClient) { }
             this.currentUser = user.user;
             this.ChangeMemberPhoto(this.currentUser.photoUrl);
 
-            console.log(this.decodedToken)
+            console.log(this.decodedToken);
           }
         })
       );
