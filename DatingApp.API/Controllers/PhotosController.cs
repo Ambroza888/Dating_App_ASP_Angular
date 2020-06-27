@@ -160,6 +160,10 @@ namespace DatingApp.API.Controllers
                     _repo.Delete(photoFromRepo);
                 }
             }
+            if (photoFromRepo.PublicId == null)
+            {
+                _repo.Delete(photoFromRepo);
+            }
             
             if (await _repo.SaveAll())
                 return Ok();
