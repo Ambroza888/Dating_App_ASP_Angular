@@ -47,14 +47,25 @@
   <div class="form-group">
     <input type="password"
       [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
-      && registerForm.get('confirmPassword').touched}" 
+        && registerForm.get('confirmPassword').touched 
+        || registerForm.get('confirmPassword').touched
+        && registerForm.hasError('mismatch')}" 
       class="form-control" 
       formControlName="confirmPassword" 
       placeholder="Confirm Password">
-      <div class="invalid-feedback"
-        *ngIf="registerForm.get('confirmPassword').hasError('required')
-        && registerForm.get('confirmPassword').touched">Password is Required</div>
+
+    <div class="invalid-feedback"
+      *ngIf="registerForm.get('confirmPassword').hasError('required')
+        && registerForm.get('confirmPassword').touched">
+        Password is Required
     </div>
+    <div class="invalid-feedback"
+      *ngIf="registerForm.hasError('mismatch')
+        && registerForm.get('confirmPassword').touched">
+        Password mush match
+    </div>
+  </div>
+
 <!-- ----------------------------------------------------------------------- -->
 <!--  -->
 <!-- ----------------------------------------------------------------------- -->
