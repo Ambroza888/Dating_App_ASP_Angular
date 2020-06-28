@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../_service/Auth.service';
 import { AlertifyService } from '../_service/alertify.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -19,9 +19,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
 
   this.registerForm = new FormGroup({
-    username: new FormControl(),
-    password: new FormControl(),
-    confirmPassword: new FormControl()
+    username: new FormControl('Hello', Validators.required),
+    password: new FormControl('', [Validators.minLength(4), Validators.maxLength(8), Validators.required]),
+    confirmPassword: new FormControl('', Validators.required)
   });
 
   }
