@@ -15,7 +15,7 @@ export class AuthService {
   decodedToken: any;
   currentUser: User;
   // ---------------------------------------------------------------------------
-  // I will use the authService to comunicate Many to Many Components.
+  // I will use the authService to communicate Many to Many Components.
   // Bring in BehaviorSubject(is type of observable). Always needs value for that i added original.png for that.
   // ---------------------------------------------------------------------------
   photoUrl = new BehaviorSubject<string>('../../assets/original.png');
