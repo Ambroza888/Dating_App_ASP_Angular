@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { error } from 'protractor';
-import { type } from 'os';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
