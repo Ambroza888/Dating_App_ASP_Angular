@@ -97,7 +97,7 @@ namespace DatingApp.API.Controllers
                 
                 // GetPhoto(routeName from above) we sent the photoid and phototoReturn);
                 //Using CreatedAtRoute method;
-                return CreatedAtRoute("GetPhoto", new {photoId = photo.Id},photoToReturn);
+                return CreatedAtRoute("GetPhoto", new {photoId = photo.Id}, photoToReturn);
             }
             
             return BadRequest("Could not add the photo");
