@@ -100,7 +100,7 @@ namespace DatingApp.API.Controllers
                 return CreatedAtRoute("GetPhoto", new {photoId = photo.Id},photoToReturn);
             }
             
-            return BadRequest("Could not add the photo mR.Veso didn't make the logic right");
+            return BadRequest("Could not add the photo");
         }
         // ---------------------------------------------------------------------
         // Setting MainPhoto route
