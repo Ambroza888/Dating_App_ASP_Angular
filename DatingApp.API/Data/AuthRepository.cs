@@ -42,7 +42,7 @@ namespace DatingApp.API.Data
         {
             // Create 2 bytes[] with passwordHASH and passwordSALT
             // then we send those bytes[] in the method CREATEPASSWORDHASH
-            // We use "out" keyword so we can send them as empty and they have been refrenced
+            // We use "out" keyword so we can send them as empty and they have been referenced
             byte[] passwordHash;
             byte[] passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
