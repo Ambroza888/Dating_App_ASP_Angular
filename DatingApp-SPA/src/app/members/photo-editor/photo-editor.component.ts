@@ -39,6 +39,8 @@ export class PhotoEditorComponent implements OnInit {
       autoUpload: false,
       maxFileSize: 10 * 1024 * 1024
     });
+    // with this onAfterAddingFile method we pass the cors error we get after sending img to the server.
+    // have to be careful with the credentials.
     this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false; };
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
