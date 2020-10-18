@@ -78,6 +78,8 @@ namespace DatingApp.API.Controllers
 
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
+            } else {
+                return BadRequest("No file has been uploaded in the request");
             }
 
             photoForCreationDto.Url = uploadResult.Uri.ToString();
