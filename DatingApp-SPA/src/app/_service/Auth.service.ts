@@ -31,12 +31,11 @@ constructor(private http: HttpClient) { }
     return this.http.post(this.baseUrl + 'login', model)
       .pipe(
         map((response: any) => {
-          const user = response;
-          if (user) {
-            localStorage.setItem('token', user.token);
-            localStorage.setItem('user', JSON.stringify(user.user));
-            this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            this.currentUser = user.user;
+          if (response) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            this.decodedToken = this.jwtHelper.decodeToken(response.token);
+            this.currentUser = response.user;
             this.ChangeMemberPhoto(this.currentUser.photoUrl);
 
             console.log(this.decodedToken);
