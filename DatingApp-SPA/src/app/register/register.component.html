@@ -49,14 +49,14 @@
 
     <div class="invalid-feedback"
       *ngIf="registerForm.get('password').hasError('required') 
-      && registerForm.get('password').touched">
-      Password is required
+          && registerForm.get('password').touched">
+          Password is required
     </div>
 
     <div class="invalid-feedback"
       *ngIf="registerForm.get('password').hasError('minlength') 
-      && registerForm.get('password').touched">
-      Minimun must be at least 4 characters
+          && registerForm.get('password').touched">
+          Minimun must be at least 4 characters
     </div>
 
     <div class="invalid-feedback"
