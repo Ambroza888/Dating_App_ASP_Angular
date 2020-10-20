@@ -5,46 +5,95 @@
   <div class="form-group">
     <label class="control-label" style="margin-right: 10px;">I am a: </label>
     <label class="radio-inline">
-      <input type="radio" value="male" formControlName="gender"> Male
+      <input 
+        type="radio"
+        value="male"
+        formControlName="gender"> Male
     </label>
     <label class="radio-inline ml-3">
-      <input type="radio" value="female" formControlName="gender"> Female
+      <input
+        type="radio"
+        value="female"
+        formControlName="gender"> Female
     </label>
   </div>
   <!-- --------------------------------------------------------------------- -->
-  <!--  -->
+  <!-- Username -->
   <!-- --------------------------------------------------------------------- -->
 
   <div class="form-group">
-    <input type="text" 
+    <input 
+      type="text" 
+      formControlName="username" 
       [ngClass]="{'is-invalid': registerForm.get('username').errors
       && registerForm.get('username').touched}" 
       class="form-control" 
-      formControlName="username" 
       placeholder="Username">
-      <div class="invalid-feedback">Please choose a username</div>
-    </div>
+    <div class="invalid-feedback">Please choose a username</div>
+  </div>
 <!-- --------------------------------------------------------------------- -->
-<!--  -->
+<!-- KnownAs -->
 <!-- --------------------------------------------------------------------- -->
   <div class="form-group">
-    <input type="text"
-    [ngClass]="{'is-invalid': registerForm.get('knownAs').errors
-    && registerForm.get('knownAs').touched}"
-    class="form-control"
-    placeholder="Known As"
-    formControlName="knownAs">
+    <input 
+      type="text" 
+      formControlName="knownAs"
+      [ngClass]="{'is-invalid': registerForm.get('knownAs').errors
+      && registerForm.get('knownAs').touched}"
+      class="form-control"
+      placeholder="Known As">
     <div class="invalid-feedback">Known as is required</div>
   </div>
 <!-- ----------------------------------------------------------------------- -->
-<!--  -->
+<!-- dateOfBirth -->
 <!-- ----------------------------------------------------------------------- -->
   <div class="form-group">
-    <input type="password"
+    <input 
+      type="date"
+      formControlName="dateOfBirth"
+      [ngClass]="{'is-invalid': registerForm.get('dateOfBirth').errors
+      && registerForm.get('dateOfBirth').touched}"
+      class="form-control"
+      placeholder="Date Of Birth">
+    <div class="invalid-feedback">Date of Birth is required</div>
+  </div>
+<!-- ----------------------------------------------------------------------- -->
+<!-- City -->
+<!-- ----------------------------------------------------------------------- -->
+  <div class="form-group">
+    <input 
+      type="text"
+      formControlName="city"
+      class="form-control"
+      placeholder="City"
+      [ngClass]="{'is-invalid': registerForm.get('city').errors
+      && registerForm.get('city').touched}">
+      <div class="invalid-feedback">City is required</div>
+  </div>
+
+<!-- ----------------------------------------------------------------------- -->
+<!-- Country -->
+<!-- ----------------------------------------------------------------------- -->
+<div class="form-group">
+  <input 
+    type="text"
+    formControlName="country"
+    class="form-control"
+    placeholder="Country"
+    [ngClass]="{'is-invalid': registerForm.get('country').errors
+    && registerForm.get('country').touched}">
+    <div class="invalid-feedback">Country is required</div>
+</div>
+<!-- ----------------------------------------------------------------------- -->
+<!-- Password -->
+<!-- ----------------------------------------------------------------------- -->
+  <div class="form-group">
+    <input 
+      type="password"
+      formControlName="password" 
+      class="form-control" 
       [ngClass]="{'is-invalid': registerForm.get('password').errors
       && registerForm.get('password').touched}"
-      class="form-control" 
-      formControlName="password" 
       placeholder="Password">
 
     <div class="invalid-feedback"
@@ -67,16 +116,17 @@
   </div>
 
 <!-- ----------------------------------------------------------------------- -->
-<!-- -->
+<!-- ConfirmPassword -->
 <!-- ----------------------------------------------------------------------- -->
   <div class="form-group">
-    <input type="password"
+    <input 
+      type="password"
+      formControlName="confirmPassword" 
+      class="form-control" 
       [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
         && registerForm.get('confirmPassword').touched 
         || registerForm.get('confirmPassword').touched
         && registerForm.hasError('mismatch')}" 
-      class="form-control" 
-      formControlName="confirmPassword" 
       placeholder="Confirm Password">
 
     <div class="invalid-feedback"
