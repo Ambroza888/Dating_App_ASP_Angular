@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../_service/Auth.service';
 import { AlertifyService } from '../_service/alertify.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-register',
@@ -13,12 +14,18 @@ export class RegisterComponent implements OnInit {
   model: any = {};
   registerForm: FormGroup;
 
+  // When we Use Partial class we make all the properties Optional !
+  bsConfig: Partial<BsDatepickerConfig>;
+
 
   constructor(private authService: AuthService,
               private alertify: AlertifyService,
               private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.bsConfig = {
+      containerClass: 'theme-red'
+    };
     this.createRegisterForm();
     // this.registerForm = new FormGroup({
     //   username: new FormControl('', Validators.required),

@@ -49,7 +49,9 @@
 <!-- ----------------------------------------------------------------------- -->
   <div class="form-group">
     <input 
-      type="date"
+      type="text"
+      bsDatepicker
+      [bsConfig]="bsConfig"
       formControlName="dateOfBirth"
       [ngClass]="{'is-invalid': registerForm.get('dateOfBirth').errors
       && registerForm.get('dateOfBirth').touched}"
