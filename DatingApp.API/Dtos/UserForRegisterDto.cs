@@ -21,11 +21,11 @@ namespace DatingApp.API.Dtos
         public string City { get; set; }
         [Required]
         public string Country { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime CreatedAt { get; set; }
         public DateTime LastActive { get; set; }
         public UserForRegisterDto()
         {
-            Created = DateTime.Now;
+            CreatedAt = DateTime.Now;
             LastActive = DateTime.Now;
         }
     }
