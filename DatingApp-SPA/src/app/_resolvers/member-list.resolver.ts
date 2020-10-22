@@ -11,7 +11,7 @@ export class MemberListResolver implements Resolve<User[]> {
   constructor(private userService: UserService, private router: Router, private alertify: AlertifyService) {}
 
   pageNumber = 3;
-  pageSize = 4;
+  pageSize = 5;
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
     return this.userService.GetUsers(this.pageNumber, this.pageSize).pipe(
