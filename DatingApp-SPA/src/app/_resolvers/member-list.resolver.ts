@@ -10,8 +10,11 @@ import { catchError } from 'rxjs/operators';
 export class MemberListResolver implements Resolve<User[]> {
   constructor(private userService: UserService, private router: Router, private alertify: AlertifyService) {}
 
+  pageNumber = 3;
+  pageSize = 4;
+
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-    return this.userService.GetUsers().pipe(
+    return this.userService.GetUsers(this.pageNumber, this.pageSize).pipe(
       catchError(error => {
         this.alertify.error(`Problem retrieving data and the error is: ${error}`);
         this.router.navigate(['/home']);
