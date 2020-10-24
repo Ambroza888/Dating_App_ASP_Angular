@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 export class MemberListResolver implements Resolve<User[]> {
   constructor(private userService: UserService, private router: Router, private alertify: AlertifyService) {}
 
-  pageNumber = 3;
+  pageNumber = 1;
   pageSize = 5;
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
