@@ -16,8 +16,8 @@ export class UserService {
 constructor(private http: HttpClient) { }
 
   GetUsers(page?, itemsPerPage?, userParams?, likesParam?): Observable<PaginatedResult<User[]>> {
-    const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
 
+    const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
     let params = new HttpParams();
 
     if (page != null && itemsPerPage != null) {
