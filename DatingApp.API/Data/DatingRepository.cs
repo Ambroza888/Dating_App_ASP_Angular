@@ -135,7 +135,7 @@ namespace DatingApp.API.Data
                     messages = messages.Where(u => u.SenderId == messageParams.UserId);
                     break;
                 default:
-                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead);
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead == false);
                     break;
             }
             messages = messages.OrderByDescending(m => m.MessageSent);
