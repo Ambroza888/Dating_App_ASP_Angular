@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatingApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201025195319_MessageEntityAdded")]
-    partial class MessageEntityAdded
+    [Migration("20201026145244_AddMessages")]
+    partial class AddMessages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,8 +44,6 @@ namespace DatingApp.API.Migrations
                     b.Property<bool>("IsRead");
 
                     b.Property<DateTime>("MessageSent");
-
-                    b.Property<int>("MyProperty");
 
                     b.Property<bool>("RecipientDeleted");
 

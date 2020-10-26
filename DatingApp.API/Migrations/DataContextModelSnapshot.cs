@@ -43,8 +43,6 @@ namespace DatingApp.API.Migrations
 
                     b.Property<DateTime>("MessageSent");
 
-                    b.Property<int>("MyProperty");
-
                     b.Property<bool>("RecipientDeleted");
 
                     b.Property<int>("RecipientId");
