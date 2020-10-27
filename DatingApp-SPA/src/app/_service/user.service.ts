@@ -73,6 +73,7 @@ constructor(private http: HttpClient) { }
   }
 
   getMessagesForUser(id: number, page?, itemsPerPage?, messageContainer?) {
+
     const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
     let params = new HttpParams();
 
