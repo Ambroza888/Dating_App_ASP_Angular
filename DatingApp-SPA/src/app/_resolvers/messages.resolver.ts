@@ -25,7 +25,7 @@ export class MessagesResolver implements Resolve<Message[]> {
       this.itemsPerPage,
       this.messageContainer).pipe(
       catchError(error => {
-        this.alertify.error(`Problem retrieving data and the error is: ${error}`);
+        this.alertify.error(`Problem retrieving messages and the error is: ${error}`);
         this.router.navigate(['/home']);
         return of(null);
       })
