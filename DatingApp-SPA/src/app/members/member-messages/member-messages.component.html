@@ -51,7 +51,7 @@
         <input type="text"
           name="content"
           [(ngModel)]="newMessage.content"
-          [required]
+          required
           class="form-control input-sm" placeholder="send a private message">
         <div class="input-group-append">
           <button class="btn btn-primary" [disabled]="!messageForm.valid">Send</button>
