@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { Message } from 'src/app/_models/message';
 import { AlertifyService } from 'src/app/_service/alertify.service';
 import { AuthService } from 'src/app/_service/Auth.service';
@@ -23,7 +24,19 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   loadMessages() {
-    this.userService.getMessagesThread(this.authService.decodedToken.nameid, this.recipientId).subscribe(messages => {
+    const currentUserId = +this.authService.decodedToken.nameid;
+    this.userService.getMessagesThread(this.authService.decodedToken.nameid, this.recipientId)
+    .pipe(
+      // use to be DO instead of tap, because of to do something before subscribe, but javascript saved that word, so is called tap
+      tap(messages => {
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < messages.length; i++) {
+          if (messages[i].isRead === false && messages[i].recipientId === currentUserId) {
+            this.userService.markAsRead(currentUserId, messages[i].id);
+          }
+        }
+      })
+    ).subscribe(messages => {
       this.messages = messages;
     }, error => {
       this.alertify.error(error);
