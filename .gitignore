@@ -80,3 +80,4 @@ appsettings.json
 appsettings.production.json
 key.json
 scratch.cs
+wwwroot
