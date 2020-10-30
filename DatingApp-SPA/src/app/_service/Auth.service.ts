@@ -37,8 +37,6 @@ constructor(private http: HttpClient) { }
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
             this.currentUser = response.user;
             this.ChangeMemberPhoto(this.currentUser.photoUrl);
-
-            console.log(this.decodedToken);
           }
         })
       );
