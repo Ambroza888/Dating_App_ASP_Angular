@@ -32,13 +32,28 @@ namespace DatingApp.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        // because I would like to deployed on azure, and azure use SqlServer I have let the ConfigureProductionServices to UseSqlServer(), in Development I UseMySql.
+        public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => {
                 options.UseLazyLoadingProxies();
-                options.UseMySql(Configuration["DBInfo:ConnectionString"]);
+                options.UseMySql(Configuration["DBInfo:ConnectionStringMySql"]);
             });
+
+            ConfigureServices(services);
+        }
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(options => {
+                options.UseLazyLoadingProxies();
+                options.UseSqlServer(Configuration["DBInfo:ConnectionStringSqlServer"]);
+            });
+
+            ConfigureServices(services);
+        }
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(opt => {
                     opt.SerializerSettings.ReferenceLoopHandling =
